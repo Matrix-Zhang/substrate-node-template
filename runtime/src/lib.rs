@@ -280,6 +280,20 @@ impl pallet_template::Config for Runtime {
 }
 
 parameter_types! {
+	pub const MaxKittyOwned: u32 = 9999;
+	pub const ReservationFee: u32 = 100;
+}
+
+impl pallet_kitties::Config for Runtime {
+	type Event = Event;
+	type Currency = Balances;
+	type ReservableCurrency = Balances;
+	type KittyRandomness = RandomnessCollectiveFlip;
+	type MaxKittyOwned = MaxKittyOwned;
+	type ReservationFee = ReservationFee;
+}
+
+parameter_types! {
 	pub const MaxProofSize: u32 = 256;
 }
 
@@ -309,6 +323,7 @@ construct_runtime!(
 		// Include the custom logic from the pallet-template in the runtime.
 		TemplateModule: pallet_template,
 		Poe: pallet_poe,
+		Kitties: pallet_kitties,
 	}
 );
 
